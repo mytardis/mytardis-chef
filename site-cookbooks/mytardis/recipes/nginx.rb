@@ -29,6 +29,7 @@ cookbook_file "/etc/nginx/conf.d/mytardis.conf" do
   notifies :reload, "service[nginx]" 
 end
 
+iptables_rule "ssh"
 iptables_rule "http"
 iptables_rule "https"
 

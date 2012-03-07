@@ -6,6 +6,12 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+
+# Ensure we have ruby-devel for the postgresql recipe
+package "ruby-devel" do
+  action :install
+end
+
 include_recipe "build-essential"
 include_recipe "mytardis::nginx"
 
@@ -114,6 +120,8 @@ deploy_revision "mytardis" do
         find . -name '*.py[co]' -delete
         python bootstrap.py
         bin/buildout -c buildout-prod.cfg install
+        bin/django syncdb --noinput --migrate
+        bin/django collectstatic -l --noinput
       EOH
     end
   end
