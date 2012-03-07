@@ -7,28 +7,10 @@
 # All rights reserved - Do Not Redistribute
 #
 
-# Ensure we have ruby-devel for the postgresql recipe
-package "ruby-devel" do
-  action :install
-end
-
 include_recipe "build-essential"
+include_recipe "mytardis::deps"
 include_recipe "mytardis::nginx"
-
-# The basics for Python & devel packages we need for buildout
-mytardis_pkg_deps = [
-  "gcc",
-  "python-devel", 
-  "openldap-devel", 
-  "openssl-devel", 
-  "libxml2-devel", 
-  "libxslt-devel"
-]
-mytardis_pkg_deps.each do |pkg|
-  package pkg do
-    action :install
-  end
-end
+include_recipe "mytardis::postgresql"
 
 ohai "reload_passwd" do
   action :nothing
