@@ -2,10 +2,30 @@
 # Cookbook Name:: mytardis
 # Recipe:: default
 #
-# Copyright 2012, The University of Queensland
+# Copyright (c) 2012, The University of Queensland
+# All rights reserved.
 #
-# All rights reserved - Do Not Redistribute
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of the The University of Queensland nor the
+#       names of its contributors may be used to endorse or promote products
+#       derived from this software without specific prior written permission.
 #
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF QUEENSLAND BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 include_recipe "build-essential"
 include_recipe "mytardis::deps"
@@ -26,7 +46,7 @@ user "mytardis" do
 end
 
 app_dirs = [
-  "/opt/mytardis",  
+  "/opt/mytardis",
   "/opt/mytardis/shared",
   "/var/lib/mytardis",
   "/var/log/mytardis"
@@ -70,7 +90,7 @@ bash "install foreman" do
   code <<-EOH
   gem install foreman
   EOH
-  only_if do 
+  only_if do
     output = `foreman help`
     $?.exitstatus == 127
   end
@@ -78,13 +98,13 @@ end
 
 deploy_revision "mytardis" do
   action :deploy
-  deploy_to "/opt/mytardis"  
+  deploy_to "/opt/mytardis"
   repository "https://github.com/mytardis/mytardis.git"
   branch "master"
   user "mytardis"
   group "mytardis"
-  symlink_before_migrate({"data" => "var", 
-                          "log" => "log", 
+  symlink_before_migrate({"data" => "var",
+                          "log" => "log",
                           "buildout.cfg" => "buildout-prod.cfg",
                           "settings.py" => "tardis/settings.py"})
   purge_before_symlink([])
@@ -92,7 +112,7 @@ deploy_revision "mytardis" do
   symlinks({})
   before_symlink do
     current_release = release_path
-    
+
     bash "mytardis_buildout_install" do
       user "mytardis"
       cwd current_release
@@ -109,7 +129,7 @@ deploy_revision "mytardis" do
   end
   restart_command do
     current_release = release_path
-    
+
     bash "mytardis_foreman_install_and_restart" do
       cwd current_release
       code <<-EOH
