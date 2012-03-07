@@ -30,9 +30,3 @@ bash "create mytardis db" do
   sudo -u postgres psql < /var/tmp/create_mytardis_db.sql
   EOH
 end
-
-bash "reset selinux perms for pgsql" do
-  code <<-EOH
-  restorecon -Rv /var/lib/pgsql/
-  EOH
-end
