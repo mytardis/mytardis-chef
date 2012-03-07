@@ -99,8 +99,8 @@ end
 deploy_revision "mytardis" do
   action :deploy
   deploy_to "/opt/mytardis"
-  repository "https://github.com/mytardis/mytardis.git"
-  branch "master"
+  repository node['mytardis']['repo']
+  branch node['mytardis']['branch']
   user "mytardis"
   group "mytardis"
   symlink_before_migrate({"data" => "var",
