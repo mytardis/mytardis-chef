@@ -48,6 +48,7 @@ end
 app_dirs = [
   "/opt/mytardis",
   "/opt/mytardis/shared",
+  "/opt/mytardis/shared/apps",
   "/var/lib/mytardis",
   "/var/log/mytardis"
 ]
@@ -96,6 +97,31 @@ bash "install foreman" do
   end
 end
 
+# Get the apps first, so they get symlinked correctly
+app_symlinks = {}
+node["mytardis"]["apps"].each do |name, props|
+  app_dir = "/opt/mytardis/shared/apps/#{name}"
+  app_symlinks["apps/#{name}/current"] = "tardis/apps/#{name}"
+  
+  directory app_dir do
+    owner "mytardis"
+    group "mytardis"
+  end
+  
+  deploy_revision "mytardis-app-#{name}" do
+    action :deploy
+    deploy_to app_dir
+    repository props['repo']
+    branch props['branch']
+    user "mytardis"
+    group "mytardis"
+    symlink_before_migrate({})
+    purge_before_symlink([])
+    create_dirs_before_symlink([])
+    symlinks({})
+  end
+end
+
 deploy_revision "mytardis" do
   action :deploy
   deploy_to "/opt/mytardis"
@@ -103,10 +129,12 @@ deploy_revision "mytardis" do
   branch node['mytardis']['branch']
   user "mytardis"
   group "mytardis"
-  symlink_before_migrate({"data" => "var",
-                          "log" => "log",
-                          "buildout.cfg" => "buildout-prod.cfg",
-                          "settings.py" => "tardis/settings.py"})
+  symlink_before_migrate(app_symlinks.merge({
+      "data" => "var",
+      "log" => "log",
+      "buildout.cfg" => "buildout-prod.cfg",
+      "settings.py" => "tardis/settings.py"
+  }))
   purge_before_symlink([])
   create_dirs_before_symlink([])
   symlinks({})
