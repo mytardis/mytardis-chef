@@ -161,7 +161,7 @@ deploy_revision "mytardis" do
     bash "mytardis_foreman_install_and_restart" do
       cwd current_release
       code <<-EOH
-        foreman export upstart /etc/init -a mytardis -p 3031 -u mytardis -l /var/log/mytardis
+        foreman export upstart /etc/init -a mytardis -p 3031 -u mytardis -l /var/log/mytardis -t ./foreman
         restart mytardis || start mytardis
       EOH
     end
