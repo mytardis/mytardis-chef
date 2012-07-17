@@ -41,12 +41,10 @@ file "/var/tmp/create_mytardis_db.sql" do
   CREATE USER mytardis;
   CREATE DATABASE mytardis OWNER mytardis;
   EOH
-  notifies :run, "bash[create mytardis db]"
 end
 
-bash "create mytardis db" do
-  action :nothing
-  code <<-EOH
-  sudo -u postgres psql < /var/tmp/create_mytardis_db.sql
-  EOH
+bash "create_my_tardis_db" do
+  # previous event-driven version never got triggered for me (SB)
+  user "postgres"
+  code "psql < /var/tmp/create_mytardis_db.sql"
 end
