@@ -29,14 +29,29 @@
 
 include_recipe "iptables"
 
-remote_file "/var/tmp/nginx-repo.rpm" do
-  source "http://nginx.org/packages/rhel/6/noarch/RPMS/nginx-release-rhel-6-0.el6.ngx.noarch.rpm"
+if platform?("redhat","centos")
+  remote_file "/var/tmp/nginx-repo.rpm" do
+    source "http://nginx.org/packages/rhel/6/noarch/RPMS/nginx-release-rhel-6-0.el6.ngx.noarch.rpm"
+  end
+
+  rpm_package "/var/tmp/nginx-repo.rpm"
 end
 
-rpm_package "/var/tmp/nginx-repo.rpm"
+if platform?("ubuntu","debian")
+   file "/etc/apt/sources.list.d/nginx-stable-lucid.list" do
+      content <<-EOH
+      deb http://nginx.org/packages/ubuntu/ lucid nginx
+      deb-src http://nginx.org/packages/ubuntu/ lucid nginx
+      EOH
+      mode "644"
+      action :create_if_missing
+   end
+   execute "apt-get update"
+end
 
 package "nginx" do
-  action :upgrade
+  options "--force-yes"
+  action [:install, :upgrade]
 end
 
 service "nginx" do
@@ -44,9 +59,15 @@ service "nginx" do
   supports :restart => true, :reload => true
 end
 
+file "/etc/nginx/conf.d/default.conf" do
+    # This file gets created if we install an old nginx first. It shows a 'welcome to nginx' page.
+    action :delete
+end
+
 cookbook_file "/etc/nginx/conf.d/mytardis.conf" do
   action :create
   source "nginx_site.conf"
+  mode "644"
   notifies :reload, "service[nginx]"
 end
 

@@ -28,19 +28,53 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # Ensure we have ruby-devel for the postgresql recipe
-package "ruby-devel" do
-  action :install
+if platform?("redhat","centos","fedora")
+  package "ruby-devel" do
+    action :install
+  end
+  # The basics for Python & devel packages we need for buildout
+  mytardis_pkg_deps = [
+    "gcc",
+    "python-devel",
+    "openldap-devel",
+    "openssl-devel",
+    "libxml2-devel",
+    "libxslt-devel"
+  ]
 end
 
+if platform?("ubuntu","debian")
+  package "ruby-dev" do
+    action :install
+  end
+  package "make" do
+#:    action :install
+  end
+
+  execute "apt-get update" do
+    # This isn't supposed to be required, but I (SteveB) am bored of investigating.
+    # Without it, imagemagick fails to install.  
+  end
+
 # The basics for Python & devel packages we need for buildout
-mytardis_pkg_deps = [
-  "gcc",
-  "python-devel",
-  "openldap-devel",
-  "openssl-devel",
-  "libxml2-devel",
-  "libxslt-devel"
-]
+  mytardis_pkg_deps = [
+    "gcc",
+    "python-dev",
+    "slapd",
+    "ldap-utils", 
+    "libssl-dev",
+    "libxml2-dev",
+    "libxslt-dev",
+
+    "git-core",
+    "imagemagick",
+    "oidentd"
+  ]
+  # openldap-devel removed - wouldn't compile?
+
+end
+
+
 mytardis_pkg_deps.each do |pkg|
   package pkg do
     action :install

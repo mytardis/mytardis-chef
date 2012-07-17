@@ -27,7 +27,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-include_recipe "build-essential"
+
+include_recipe "mytardis::build-essential"
 include_recipe "mytardis::deps"
 include_recipe "mytardis::nginx"
 include_recipe "mytardis::postgresql"
@@ -89,7 +90,8 @@ end
 
 bash "install foreman" do
   code <<-EOH
-  gem install foreman
+  # Version 0.48 removes 'log_root' variable
+  gem install foreman -v 0.47.0
   EOH
   only_if do
     output = `foreman help`
@@ -145,13 +147,14 @@ deploy_revision "mytardis" do
       user "mytardis"
       cwd current_release
       code <<-EOH
+        # this egg-cache directory never gets created - hopfully not a problem.
         export PYTHON_EGG_CACHE=/opt/mytardis/shared/egg-cache
         python setup.py clean
         find . -name '*.py[co]' -delete
         python bootstrap.py
         bin/buildout -c buildout-prod.cfg install
-        bin/django syncdb --noinput --migrate
-        bin/django collectstatic -l --noinput
+        bin/django syncdb --noinput --migrate 
+        bin/django collectstatic -l --noinput 
       EOH
     end
   end
