@@ -35,6 +35,12 @@ if platform?("redhat","centos")
   end
 
   rpm_package "/var/tmp/nginx-repo.rpm"
+  
+  yum_package "nginx" do
+    # todo: determine architecture
+    arch "x86_64"
+    action [:install, :upgrade]
+  end  
 end
 
 if platform?("ubuntu","debian")
@@ -47,11 +53,11 @@ if platform?("ubuntu","debian")
       action :create_if_missing
    end
    execute "apt-get update"
-end
-
-package "nginx" do
-  options "--force-yes"
-  action [:install, :upgrade]
+   
+   package "nginx" do
+     options "--force-yes"
+     action [:install, :upgrade]
+   end   
 end
 
 service "nginx" do

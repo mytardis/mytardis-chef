@@ -39,7 +39,8 @@ if platform?("redhat","centos","fedora")
     "openldap-devel",
     "openssl-devel",
     "libxml2-devel",
-    "libxslt-devel"
+    "libxslt-devel",
+    "ImageMagick",
   ]
 end
 
@@ -51,10 +52,6 @@ if platform?("ubuntu","debian")
 #:    action :install
   end
 
-  execute "apt-get update" do
-    # This isn't supposed to be required, but I (SteveB) am bored of investigating.
-    # Without it, imagemagick fails to install.  
-  end
 
 # The basics for Python & devel packages we need for buildout
   mytardis_pkg_deps = [
@@ -65,7 +62,6 @@ if platform?("ubuntu","debian")
     "libssl-dev",
     "libxml2-dev",
     "libxslt-dev",
-
     "git-core",
     "imagemagick",
     "oidentd"

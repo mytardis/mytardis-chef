@@ -1,0 +1,40 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+ 
+user = ENV['OPSCODE_USER'] || ENV['USER']
+base_box = ENV['VAGRANT_BOX'] || 'lucid32'
+ 
+Vagrant::Config.run do |config|
+  config.vm.box = base_box
+  config.vm.forward_port 80,
+  config.ssh.max_tries = 150
+  config.vm.boot_mode = :gui
+  # doesn't always work or get an accessible ip
+  #config.vm.network :bridged
+  # must choose unique subnet + ip
+  config.vm.network :hostonly, "10.2.2.10"
+  config.vm.provision :shell, :inline => "gem update chef"
+ 
+  config.vm.provision :chef_client do |chef|
+ 
+    # Set up some organization specific values based on environment variable above.
+    chef.chef_server_url = "https://api.opscode.com/organizations/#{ENV['ORGNAME']}"
+    chef.validation_key_path = "#{ENV['HOME']}/.chef/#{ENV['ORGNAME']}-validator.pem"
+    chef.validation_client_name = "#{ENV['ORGNAME']}-validator"
+ 
+    # Change the node/client name for the Chef Server
+    chef.node_name = "#{user}-vagrant"
+ 
+    # Put the client.rb in /etc/chef so chef-client can be run w/o specifying
+    chef.provisioning_path = "/etc/chef"
+ 
+    # logging
+    chef.log_level = :info
+ 
+    # adjust the run list to suit your testing needs
+    chef.run_list = [
+      "role[mytardis]"
+    ]
+  end
+end
+

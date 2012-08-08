@@ -93,9 +93,10 @@ bash "install foreman" do
   # Version 0.48 removes 'log_root' variable
   gem install foreman -v 0.47.0
   EOH
+  #this fails on NeCTAR Ubuntu Lucid..
   only_if do
-    output = `foreman help`
-    $?.exitstatus == 127
+    output = `gem list --local | grep foreman`
+    output.length == 0
   end
 end
 
