@@ -10,7 +10,7 @@
   "override_attributes": {
   },
   "description": "",
-  "name": "mytardis",
+  "name": "mytardis-rhel",
   "default_attributes": {
   }
 }
