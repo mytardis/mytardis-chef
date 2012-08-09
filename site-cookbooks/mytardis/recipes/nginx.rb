@@ -37,8 +37,11 @@ if platform?("redhat","centos")
   rpm_package "/var/tmp/nginx-repo.rpm"
   
   yum_package "nginx" do
-    # todo: determine architecture
-    arch "x86_64"
+    if system("sysctl hw.cpu64bit_capable > /dev/null 2>&1")
+      arch "x86_64"
+    else
+      arch "i386"
+    end
     action [:install, :upgrade]
   end  
 end
