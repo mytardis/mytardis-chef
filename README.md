@@ -43,17 +43,7 @@ This will upload the MyTardis recipe and its dependencies to your Hosted Chef.
 
 **Create Knife Roles**
 
-*This cookbook currently contains 2 roles: One for rhel-based linux (ie CentOS) and one for debian-based linux (ie. Ubuntu). This is due to the need for some Ubuntu installations to update themselves before the MyTardis recipe is run.*
-
-Load the relevant role for your target installation.
-
-eg. Ubuntu:
-
-    knife role from file /path/to/mytardis-chef/roles/mytardis-deb.json
-
-eg. CentOS
-
-    knife role from file /path/to/mytardis-chef/roles/mytardis-rhel.json
+    knife role from file /path/to/mytardis-chef/roles/mytardis.json
 
 Your Hosted Chef now has the cookbook, and roles and therefore all it needs to be run on an instance.
 
@@ -96,15 +86,15 @@ Run these commands from your knife client workstation (your local machine). You 
 
 For CentOS 6, where <ip> is the ip address of the target server and root is the name of your superuser account. Note: depending on your remote machine, you may need to use key authentication by inserting '-i /path/to/yourkey.pem' in the account.
 
-    knife bootstrap <ip> -x root -r 'role[mytardis-rhel]'
+    knife bootstrap <ip> -x root -r 'role[mytardis]'
 
 For Ubuntu 10 (Lucid)
 
-    knife bootstrap <ip> -x ubuntu --sudo -r 'role[mytardis-deb]'
+    knife bootstrap <ip> -x ubuntu --sudo -r 'rolemytardis]'
 
 For Ubuntu 12:
 
-    knife bootstrap <ip> -x ubuntu --sudo -d ubuntu12.04-gems -r 'role[mytardis-deb]'
+    knife bootstrap <ip> -x ubuntu --sudo -d ubuntu12.04-gems -r 'role[mytardis]'
 
 That's it! You should watch knife invoke chef on the target server and watch the deployment unfold before your eyes.
 
