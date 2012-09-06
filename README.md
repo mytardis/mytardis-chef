@@ -90,7 +90,7 @@ For CentOS 6, where <ip> is the ip address of the target server and root is the 
 
 For Ubuntu 10 (Lucid)
 
-    knife bootstrap <ip> -x ubuntu --sudo -r 'rolemytardis]'
+    knife bootstrap <ip> -x ubuntu --sudo -r 'role[mytardis]'
 
 For Ubuntu 12:
 
