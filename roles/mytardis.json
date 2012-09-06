@@ -1,7 +1,5 @@
 {
   "run_list": [
-    "recipe[apt]",  
-    "recipe[git]",
     "recipe[mytardis]"
   ],
   "json_class": "Chef::Role",
@@ -11,7 +9,7 @@
   "override_attributes": {
   },
   "description": "",
-  "name": "mytardis-deb",
+  "name": "mytardis",
   "default_attributes": {
   }
 }
