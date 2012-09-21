@@ -32,7 +32,7 @@ Vagrant::Config.run do |config|
  
     # adjust the run list to suit your testing needs
     chef.run_list = [
-      "role[mytardis-rhel]"
+      "role[mytardis]"
     ]
   end
 end
