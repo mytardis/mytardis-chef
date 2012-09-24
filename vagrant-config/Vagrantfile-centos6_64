@@ -10,8 +10,8 @@ Vagrant::Config.run do |config|
   config.vm.boot_mode = :gui
   # doesn't always work or get an accessible ip
   # config.vm.network :bridged
-  # must choose unique subnet + ip
-  config.vm.network :hostonly, "10.2.2.6"
+  # must choose unique subnet + ip if doing bridged
+  #config.vm.network :hostonly, "10.2.2.6"
   config.vm.provision :shell, :inline => "gem update chef"
  
   config.vm.provision :chef_client do |chef|
