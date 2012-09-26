@@ -105,28 +105,6 @@ end
 
 # Get the apps first, so they get symlinked correctly
 app_symlinks = {}
-node["mytardis"]["apps"].each do |name, props|
-  app_dir = "/opt/mytardis/shared/apps/#{name}"
-  app_symlinks["apps/#{name}/current"] = "tardis/apps/#{name}"
-  
-  directory app_dir do
-    owner "mytardis"
-    group "mytardis"
-  end
-  
-  deploy_revision "mytardis-app-#{name}" do
-    action :deploy
-    deploy_to app_dir
-    repository props['repo']
-    branch props['branch']
-    user "mytardis"
-    group "mytardis"
-    symlink_before_migrate({})
-    purge_before_symlink([])
-    create_dirs_before_symlink([])
-    symlinks({})
-  end
-end
 
 deploy_revision "mytardis" do
   action :deploy
