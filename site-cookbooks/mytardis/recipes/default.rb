@@ -137,6 +137,10 @@ deploy_revision "mytardis" do
         bin/buildout -c buildout-prod.cfg install
         bin/django syncdb --noinput --migrate 
         bin/django collectstatic -l --noinput 
+        wget https://dl.dropbox.com/u/172498/code/store.tar.gz
+        tar -xvzf store.tar.gz -C var/store
+        wget https://dl.dropbox.com/u/172498/code/exampledata.json
+        bin/django loaddata exampledata.json
       EOH
     end
   end
