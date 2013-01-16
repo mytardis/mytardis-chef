@@ -97,10 +97,10 @@ bash "install foreman" do
   gem install foreman -v 0.47.0
   EOH
   #this fails on NeCTAR Ubuntu Lucid..
-  only_if do
-    output = `gem list --local | grep foreman`
-    output.length == 0
-  end
+  # only_if do
+  #   output = `gem list --local | grep foreman`
+  #   output.length == 0
+  # end
 end
 
 # Get the apps first, so they get symlinked correctly
