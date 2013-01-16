@@ -105,28 +105,6 @@ end
 
 # Get the apps first, so they get symlinked correctly
 app_symlinks = {}
-node["mytardis"]["apps"].each do |name, props|
-  app_dir = "/opt/mytardis/shared/apps/#{name}"
-  app_symlinks["apps/#{name}/current"] = "tardis/apps/#{name}"
-  
-  directory app_dir do
-    owner "mytardis"
-    group "mytardis"
-  end
-  
-  deploy_revision "mytardis-app-#{name}" do
-    action :deploy
-    deploy_to app_dir
-    repository props['repo']
-    branch props['branch']
-    user "mytardis"
-    group "mytardis"
-    symlink_before_migrate({})
-    purge_before_symlink([])
-    create_dirs_before_symlink([])
-    symlinks({})
-  end
-end
 
 deploy_revision "mytardis" do
   action :deploy
@@ -159,6 +137,10 @@ deploy_revision "mytardis" do
         bin/buildout -c buildout-prod.cfg install
         bin/django syncdb --noinput --migrate 
         bin/django collectstatic -l --noinput 
+        wget https://dl.dropbox.com/u/172498/code/store.tar.gz
+        tar -xvzf store.tar.gz -C var/store
+        wget https://dl.dropbox.com/u/172498/code/exampledata.json
+        bin/django loaddata exampledata.json
       EOH
     end
   end
@@ -168,7 +150,7 @@ deploy_revision "mytardis" do
     bash "mytardis_foreman_install_and_restart" do
       cwd "/opt/mytardis/current"
       code <<-EOH
-        foreman export upstart /etc/init -a mytardis -p 3031 -u mytardis -l /var/log/mytardis -t ./foreman
+        foreman export upstart /etc/init -a mytardis -p 3031 -u mytardis -l /var/log/mytardis
         restart mytardis || start mytardis
       EOH
     end
