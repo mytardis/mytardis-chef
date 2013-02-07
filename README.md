@@ -14,6 +14,19 @@ Also includes Stevage's atom app. [http://github.com/stevage][3]
 
 This installation is very minimal (no accounts, no example data) but is enough to get you started.
 
+Health Warning
+==============
+
+If you use this recipe for building a "production" MyTardis instance (i.e. one where the data matters), then you need to be aware of a couple of things:
+
+ 1. This recipe does not set up backups of either the MyTardis database or the data store area weher data files are kept.  You need to make your own arrangements.
+ 1. MyTardis uses South migration for managing database schema changes, and this recipe in its current form will apply any pending South migrations without any warning.  This ''should'' work, but there is always a risk that the migration will go wrong, and that you will be left with a corrupted database.  It is prudent to ''back up your database and data'' before you attempt to deploy a new version.
+
+ 1. This recipe works by checking out and building MyTardis from a designated branch of a designated repository.  This can be risky.  For a production MyTardis instance:
+  * It is prudent to use a stable branch of MyTardis rather than 'master' some other development branch.  
+  * Consider creating your own MyTardis fork and using that so that you don't get surprise redeployments.  (Especially if you are tracking 'master'.)
+  * It is prudent to try out redeployments in a Test or UAT instance rather than redeploying straight into production.
+
 Configuration
 =============
 
