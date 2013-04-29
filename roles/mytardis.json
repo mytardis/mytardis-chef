@@ -9,7 +9,13 @@
   "override_attributes": {
   },
   "description": "",
-  "name": "mytardis",
+  "name": "mytardis-3",
   "default_attributes": {
+      "mytardis": {
+        "repo": "https://github.com/mytardis/mytardis.git",
+        "branch": "master",
+        "apps": {
+        }
+      }
   }
 }
