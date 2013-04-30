@@ -1,6 +1,6 @@
 Overview
 ========
-*Written by Steve Androulakis (github user steveandroulakis) on 9th August 2012*
+*Written by Steve Androulakis (github user steveandroulakis) on 9th August 2012, updated 30th April 2013*
 
 This Cookbook installs the current master of MyTardis - [http://github.com/mytardis/mytardis][1]
 
