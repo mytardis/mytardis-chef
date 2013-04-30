@@ -2,7 +2,6 @@
   "name": "mytardis-chefsolo",
   "chef_environment": "_default",
     "postgresql": {
-      "dir": "/var/lib/pgsql/data",
       "password": {
         "postgres": "md58c34d6a23b00817aa5ef7c620638f491"
       }
