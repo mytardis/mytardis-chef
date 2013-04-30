@@ -19,13 +19,11 @@ Vagrant::Config.run do |config|
     chef.log_level = :debug
     chef.json = {"chef_environment"=>"_default",
                    "run_list"=>["role[mytardis]"],
-                    "normal"=>
-                    {"postgresql"=>
-                      {
-                        "dir"=>"/var/lib/pgsql/data",
-                        "password"=>{
-                        "postgres"=>"insertpasswordhere"}},
-                        "tags"=>[]},
+                    "postgresql"=>
+                    {
+                      "password"=>{
+                        "postgres"=>"md58c34d6a23b00817aa5ef7c620638f491"}
+                    },
                     "name"=>"mytardis-chefsolo"
                 }  
   end 
