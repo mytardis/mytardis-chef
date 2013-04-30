@@ -130,6 +130,7 @@ knife ec2 server create \
 *  The AMI used is available on the us-west2 (oregon) region. If you decide to deploy elsewhere, then find a new image.
 *  The json-attributes is loaded from solo/node.json in this repository as an example. You can create your own if you wish, or edit this one
 *  Make sure you've set up default security rules on the EC2 management console to allow connections to port 80, or else you'll end up with a server you can't connect to!
+*  Connecting to your server's IP in the browser doesn't work, but connecting to the hostname (FQDN) does, so beware.
 
   [1]: http://github.com/mytardis/mytardis
   [2]: http://nectar.org.au/
