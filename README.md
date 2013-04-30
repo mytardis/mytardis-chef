@@ -81,6 +81,56 @@ For Ubuntu 12:
 
 That's it! You should watch knife invoke chef on the target server and watch the deployment unfold before your eyes.
 
+Amazon EC2 Deployment
+-------
+
+Instructions for remotely deploying MyTardis on an Amazon EC2 instance.
+
+**Prerequisites:**
+*  Have a chef knife workstation set up sufficiently so you can communicate with either a Chef Server or Hosted Chef. An example knife.rb is as follows:
+
+```
+log_level                :info
+log_location             STDOUT
+# your chef-server or hosted chef username
+node_name                'admin'
+# your key downloaded from chef-server or hosted chef
+client_key               '/root/.chef/admin.pem'
+# your validator key name downloaded from chef-server or hosted chef
+validation_client_name   'chef-validator' 
+# your validator key downloaded from chef-server or hosted chef
+validation_key           '/root/.chef/validation.pem'
+# if using chef server then the URL
+chef_server_url          'https://spetznatz.ath.cx'
+# usually a subdir of your username on the knife workstation
+syntax_check_cache_path  '/root/.chef/syntax_check_cache'
+```
+*  An Amazon EC2 account (know your access key ID and secret key)
+*  SSH keys created and downloaded for logging into an EC2 instance
+
+Install the knife ec2 plugin:
+
+`gem install knife-ec2` (or see https://github.com/opscode/knife-ec2)
+
+Here's a sample command that spins up an EC2 instance of [CentOS 6.2](http://thecloudmarket.com/image/ami-8035b9b0--centos-6-2-x86-64-virtastic-120619) and deploys MyTardis.
+
+```
+knife ec2 server create \ 
+    -r "role[mytardis-3]" \
+    -I ami-8035b9b0 --flavor m1.small \
+    -x ec2-user -N mytardis \
+    --aws-access-key-id "FROM_AMAZON_EC2_CONSOLE" \
+    --aws-secret-access-key "FROM_AMAZON_EC2_CONSOLE" \
+    --ssh-key "CREATED_IN_AMAZON" --identity-file "CREATED_IN_AMAZON.pem" \
+    --region us-west-2 --json-attributes "`<solo/node.json`"
+```
+
+*  This cookbook must be uploaded to your chef server or hosted chef (see previous Remote Deployment section)
+*  The roles/mytardis.json must be loaded into the server
+*  The AMI used is available on the us-west2 (oregon) region. If you decide to deploy elsewhere, then find a new image.
+*  The json-attributes is loaded from solo/node.json in this repository as an example. You can create your own if you wish, or edit this one
+*  Make sure you've set up default security rules on the EC2 management console to allow connections to port 80, or else you'll end up with a server you can't connect to!
+
   [1]: http://github.com/mytardis/mytardis
   [2]: http://nectar.org.au/
   [3]: http://github.com/stevage
