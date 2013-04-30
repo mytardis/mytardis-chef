@@ -1,17 +1,12 @@
 {
   "name": "mytardis-chefsolo",
   "chef_environment": "_default",
-  "normal": {
-    "tags": [
-
-    ],
     "postgresql": {
       "dir": "/var/lib/pgsql/data",
       "password": {
-        "postgres": "insertpasswordhere"
+        "postgres": "md58c34d6a23b00817aa5ef7c620638f491"
       }
-    }
-  },
+    },
   "run_list": [
     "role[mytardis]"
   ]
