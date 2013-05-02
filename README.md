@@ -73,11 +73,11 @@ For CentOS 6, where <ip> is the ip address of the target server and root is the 
 
 For Ubuntu 10 (Lucid)
 
+_Note: you may have to apt-get update the server first. This is simple by running:_
+
+    knife bootstrap <ip> -x ubuntu --sudo -r 'recipe[apt]'
+
     knife bootstrap <ip> -x ubuntu --sudo -r 'role[mytardis]'
-
-For Ubuntu 12:
-
-    knife bootstrap <ip> -x ubuntu --sudo -d ubuntu12.04-gems -r 'role[mytardis]'
 
 That's it! You should watch knife invoke chef on the target server and watch the deployment unfold before your eyes.
 
