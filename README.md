@@ -34,8 +34,10 @@ This guide will cover two methods. Vagrant (virtual machine on your local comput
 
 Local Deployment
 -------
+Chef-Solo is a very quick and easy way to install MyTardis on a clean VM such as the NeCTAR cloud. It is as simple as pasting a few commands into a terminal. 
+Recommended for first-timers, evaluating MyTardis, and developers setting up a local VM using Vagrant.
 
-See https://github.com/mytardis/mytardis-chef/wiki/Chef-Solo-Guide for a guide (including using Vagrant).
+See https://github.com/mytardis/mytardis-chef/wiki/Chef-Solo-Guide .
 
 Remote Deployment
 -------
