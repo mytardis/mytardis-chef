@@ -40,7 +40,7 @@ if platform?("redhat","centos","fedora")
     "openssl-devel",
     "libxml2-devel",
     "libxslt-devel",
-    "ImageMagick",
+    "ImageMagick"
   ]
 end
 
@@ -49,11 +49,11 @@ if platform?("ubuntu","debian")
     action :install
   end
   package "make" do
-#:    action :install
+  #:    action :install
   end
 
 
-# The basics for Python & devel packages we need for buildout
+  # The basics for Python & devel packages we need for buildout
   mytardis_pkg_deps = [
     "gcc",
     "python-dev",
@@ -64,7 +64,8 @@ if platform?("ubuntu","debian")
     "libxslt-dev",
     "git-core",
     "imagemagick",
-    "oidentd"
+    "oidentd",
+    "libgraphviz-dev"
   ]
   # openldap-devel removed - wouldn't compile?
 
