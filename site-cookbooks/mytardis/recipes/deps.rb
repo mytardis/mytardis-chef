@@ -32,7 +32,7 @@ if platform?("redhat","centos","fedora")
   package "ruby-devel" do
     action :install
   end
-  # The basics for Python & devel packages we need for buildout
+  # System-wide dependencies that are needed for buildout to function. 
   mytardis_pkg_deps = [
     "gcc",
     "python-devel",
@@ -40,7 +40,8 @@ if platform?("redhat","centos","fedora")
     "openssl-devel",
     "libxml2-devel",
     "libxslt-devel",
-    "ImageMagick"
+    "ImageMagick",
+    "graphviz-devel"
   ]
 end
 
@@ -53,7 +54,7 @@ if platform?("ubuntu","debian")
   end
 
 
-  # The basics for Python & devel packages we need for buildout
+  # System-wide dependencies that are needed for buildout to function. 
   mytardis_pkg_deps = [
     "gcc",
     "python-dev",
