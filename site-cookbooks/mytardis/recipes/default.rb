@@ -147,6 +147,13 @@ deploy_revision "mytardis" do
       cwd "/opt/mytardis/current"
       code <<-EOH
         foreman export upstart /etc/init -a mytardis -p 3031 -u mytardis -l /var/log/mytardis
+        cat >> /etc/init/mytardis-uwsgi-1.conf <<EOZ
+post-stop script
+  pkill uwsgi
+  sleep 2
+  pkill -9 uwsgi
+end script
+EOZ
         restart mytardis || start mytardis
       EOH
     end
