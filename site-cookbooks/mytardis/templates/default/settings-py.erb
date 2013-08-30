@@ -14,3 +14,4 @@ DATABASES = {
 # Disable faulty equipment app
 INSTALLED_APPS = filter(lambda a: a != 'tardis.apps.equipment', INSTALLED_APPS)
 
+ALLOWED_HOSTS = [ <%= '"' + node[:ipaddress] + '"' + (node[:fqdn] ? ',"' + node[:fqdn] + '"' : "") %> ]

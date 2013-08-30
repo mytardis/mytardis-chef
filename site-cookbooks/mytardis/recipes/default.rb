@@ -84,9 +84,9 @@ cookbook_file "/opt/mytardis/shared/buildout.cfg" do
   group "mytardis"
 end
 
-cookbook_file "/opt/mytardis/shared/settings.py" do
+template "/opt/mytardis/shared/settings.py" do
   action :create_if_missing
-  source "settings.py"
+  source "settings-py.erb"
   owner "mytardis"
   group "mytardis"
 end
