@@ -135,8 +135,8 @@ deploy_revision "mytardis" do
         find . -name '*.py[co]' -delete
         python bootstrap.py -c buildout-prod.cfg -v 1.7.0
         bin/buildout -c buildout-prod.cfg install
-        bin/django syncdb --noinput --migrate 
-        bin/django collectstatic -l --noinput 
+        bin/django syncdb --noinput --migrate
+        bin/django collectstatic -l --noinput
       EOH
     end
   end
@@ -146,7 +146,8 @@ deploy_revision "mytardis" do
     bash "mytardis_foreman_install_and_restart" do
       cwd "/opt/mytardis/current"
       code <<-EOH
-        foreman export upstart /etc/init -a mytardis -p 3031 -u mytardis -l /var/log/mytardis
+        echo "PYTHON_EGG_CACHE=/opt/mytardis/shared/egg-cache" >> .env
+        foreman export upstart /etc/init -a mytardis -p 8000 -u mytardis -l /var/log/mytardis
         cat >> /etc/init/mytardis-uwsgi-1.conf <<EOZ
 post-stop script
   pkill uwsgi
@@ -159,4 +160,3 @@ EOZ
     end
   end
 end
-

@@ -32,7 +32,7 @@ if platform?("redhat","centos","fedora")
   package "ruby-devel" do
     action :install
   end
-  # System-wide dependencies that are needed for buildout to function. 
+  # System-wide dependencies that are needed for buildout to function.
   mytardis_pkg_deps = [
     "gcc",
     "python-devel",
@@ -41,7 +41,8 @@ if platform?("redhat","centos","fedora")
     "libxml2-devel",
     "libxslt-devel",
     "ImageMagick",
-    "graphviz-devel"
+    "graphviz-devel",
+    "libevent-devel"
   ]
 end
 
@@ -54,19 +55,20 @@ if platform?("ubuntu","debian")
   end
 
 
-  # System-wide dependencies that are needed for buildout to function. 
+  # System-wide dependencies that are needed for buildout to function.
   mytardis_pkg_deps = [
     "gcc",
     "python-dev",
     "slapd",
-    "ldap-utils", 
+    "ldap-utils",
     "libssl-dev",
     "libxml2-dev",
     "libxslt-dev",
     "git-core",
     "imagemagick",
     "oidentd",
-    "libgraphviz-dev"
+    "libgraphviz-dev",
+    "libevent-dev"
   ]
   # openldap-devel removed - wouldn't compile?
 

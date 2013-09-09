@@ -12,8 +12,8 @@
   "name": "mytardis-3",
   "default_attributes": {
       "mytardis": {
-        "repo": "https://github.com/mytardis/mytardis.git",
-        "branch": "master",
+        "repo": "https://github.com/grischa/mytardis.git",
+        "branch": "gunicorn",
         "apps": {
         }
       }

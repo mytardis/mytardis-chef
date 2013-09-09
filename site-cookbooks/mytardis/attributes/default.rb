@@ -1,2 +1,2 @@
-default["mytardis"]["repo"] = "https://github.com/mytardis/mytardis.git"
-default["mytardis"]["branch"] = "master"
+default["mytardis"]["repo"] = "https://github.com/grischa/mytardis.git"
+default["mytardis"]["branch"] = "gunicorn"
