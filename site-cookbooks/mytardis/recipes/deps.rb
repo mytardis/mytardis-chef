@@ -67,6 +67,7 @@ if platform?("ubuntu","debian")
     "git-core",
     "imagemagick",
     "oidentd",
+    "pkg-config",
     "libgraphviz-dev",
     "libevent-dev"
   ]
