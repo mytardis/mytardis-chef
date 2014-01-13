@@ -1,6 +1,6 @@
 maintainer       "Steve Androulakis"
 maintainer_email "steve.androulakis@monash.edu"
-license          "All rights reserved"
+license          "BSD 3-clause"
 description      "Installs/Configures mytardis"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.3"
